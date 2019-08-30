@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: mars-user-server
+  sleuth:
+    sampler:
+      probability: 1
+  datasource:
+    url: jdbc:mysql://192.168.245.130:3306/mars?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 18000  # 空闲连接存货的最大时间 默认10分钟
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: marsUserHikariCPl
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query:  select 1
+    type: com.zaxxer.hikari.HikariDataSource
+#Hikari 配置
+
+server:
+  port: 8001
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+mybatis:
+  type-aliases-package: org.mars.user.mapper
+  mapper-locations: classpath:/mapper/*Mapper.xml
+
+logging:
+  level:
+    org.mars.user.mapper: true
+debug: true
