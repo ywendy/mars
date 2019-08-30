@@ -7,5 +7,6 @@ target
 .project
 .git
 .iml
+*.iml
 .idea
 logs
