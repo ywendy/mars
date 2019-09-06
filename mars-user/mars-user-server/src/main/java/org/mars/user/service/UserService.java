@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @author yaojian
  * @date 2019/8/30
  */
-@Service
+//@Service
 public class UserService {
     @Autowired
     private UserMapper userMapper;

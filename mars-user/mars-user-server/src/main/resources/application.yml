@@ -1,11 +1,14 @@
+server:
+  port: 8001
 spring:
   application:
     name: mars-user-server
   sleuth:
     sampler:
       probability: 1
-  datasource:
-    url: jdbc:mysql://192.168.245.130:3306/mars?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
+  user0:
+    type: com.zaxxer.hikari.HikariDataSource
+    jdbc-url: jdbc:mysql://192.168.245.130:3306/mars-user0?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -18,11 +21,26 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       connection-test-query:  select 1
+      read-only: false
+  user1:
     type: com.zaxxer.hikari.HikariDataSource
-#Hikari 配置
+    jdbc-url: jdbc:mysql://192.168.245.130:3306/mars-user1?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 18000  # 空闲连接存货的最大时间 默认10分钟
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: marsUserHikariCPl
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query:  select 1
+      read-only: false
 
-server:
-  port: 8001
+
+
 eureka:
   instance:
     prefer-ip-address: true

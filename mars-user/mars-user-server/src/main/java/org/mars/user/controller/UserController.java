@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author yaojian
  * @date 2019/8/28
  */
-@RestController
-@RequestMapping("/user")
+//@RestController
+//@RequestMapping("/user")
 @Slf4j
 public class UserController {
 
