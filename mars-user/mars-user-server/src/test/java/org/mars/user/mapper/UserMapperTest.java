@@ -86,10 +86,10 @@ public class UserMapperTest {
         ExecutorService executor = Executors.newFixedThreadPool(50);
 
 
-        for (int n = 0; n < 30; n++) {
+        for (int n = 0; n < 1; n++) {
             executor.submit(() -> {
-                for (int j = 0; j < 1000; j++) {
-                    System.out.println("begin================");
+                for (int j = 0; j < 100; j++) {
+                    //System.out.println("begin================");
                     try {
                         int i = ThreadLocalRandom.current().nextInt(2);
                         User record = new User();
@@ -107,14 +107,16 @@ public class UserMapperTest {
                         record.setAvatar("/profile/avatar/" + pingyin + ".png");
                         String login_name = pingyin + "_" + UUID.randomUUID().toString().replace("-","");
                         record.setLoginName(login_name);
-                        record.setUid(uidGenerator.nextId(login_name.hashCode()));
+                        int hash = login_name.hashCode();
+                        System.err.println("---------------"+hash%2+"---"+hash%16+"-------------------------");
+                        record.setUid(uidGenerator.nextId(hash));
                         userMapper.insertSelective(record);
-                        System.err.println("--------------" + j + "-------------------------");
+                        //System.out.println("--------------" + j + "-------------------------");
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.out.println(j + "----------error-----------------");
                     }
-                    System.out.println("end================");
+                    //System.out.println("end================");
                 }
             });
         }
