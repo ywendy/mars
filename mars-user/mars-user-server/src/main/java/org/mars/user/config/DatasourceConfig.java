@@ -1,13 +1,9 @@
 package org.mars.user.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shardingsphere.api.config.encrypt.EncryptColumnRuleConfiguration;
-import org.apache.shardingsphere.api.config.encrypt.EncryptRuleConfiguration;
-import org.apache.shardingsphere.api.config.encrypt.EncryptTableRuleConfiguration;
-import org.apache.shardingsphere.api.config.encrypt.EncryptorRuleConfiguration;
-import org.apache.shardingsphere.api.config.sharding.KeyGeneratorConfiguration;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
+import org.apache.shardingsphere.api.config.sharding.strategy.ComplexShardingStrategyConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.StandardShardingStrategyConfiguration;
 import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
@@ -21,7 +17,6 @@ import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -61,6 +56,7 @@ public class DatasourceConfig {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
         shardingRuleConfig.getTableRuleConfigs().add(getUserTableRulesConfiguration());
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("uid", "user_${uid % 2}"));
+        //shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new ComplexShardingStrategyConfiguration("uid,login_name"));
         shardingRuleConfig.setDefaultTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("uid", new UserShardingTableAlgorithm()));
         return ShardingDataSourceFactory.createDataSource(createDataSourceMap(),
                 shardingRuleConfig, new Properties());
@@ -78,15 +74,15 @@ public class DatasourceConfig {
 
     TableRuleConfiguration getUserTableRulesConfiguration() {
         TableRuleConfiguration result = new TableRuleConfiguration("t_user", "user_${0..1}.t_user_${0..7}");
-        result.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
+        //result.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
         return result;
     }
 
 
-    private KeyGeneratorConfiguration getKeyGeneratorConfiguration() {
+  /*  private KeyGeneratorConfiguration getKeyGeneratorConfiguration() {
         return new KeyGeneratorConfiguration("SNOWFLAKE", "uid", new Properties());
     }
-
+*/
 
 
 

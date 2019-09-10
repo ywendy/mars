@@ -5,25 +5,22 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mars.user.domain.User;
 import org.mars.user.util.NameBuilder;
 import org.mars.user.util.RandomName;
+import org.mars.user.util.UidGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.*;
-
-import static org.junit.Assert.*;
+import java.io.IOException;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yaojian
@@ -39,10 +36,13 @@ public class UserMapperTest {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private UidGenerator uidGenerator;
+
     @Test
     public void testSelectByKey() {
-        User user = userMapper.selectByUid(375729249329348608L);
-        System.out.println(user);
+       /* User user = userMapper.selectByUid(375729249329348608L);
+        System.out.println(user);*/
     }
 
 
@@ -93,6 +93,7 @@ public class UserMapperTest {
                     try {
                         int i = ThreadLocalRandom.current().nextInt(2);
                         User record = new User();
+
                         String name = NameBuilder.build();
                         String pingyin = pingyin(name).toLowerCase();
                         record.setName(name);
@@ -104,6 +105,9 @@ public class UserMapperTest {
                         record.setAge(age);
                         record.setPwd(pingyin + age);
                         record.setAvatar("/profile/avatar/" + pingyin + ".png");
+                        String login_name = pingyin + "_" + UUID.randomUUID().toString().replace("-","");
+                        record.setLoginName(login_name);
+                        record.setUid(uidGenerator.nextId(login_name.hashCode()));
                         userMapper.insertSelective(record);
                         System.err.println("--------------" + j + "-------------------------");
                     } catch (Exception e) {

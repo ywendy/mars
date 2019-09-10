@@ -15,11 +15,8 @@ public class UserShardingTableAlgorithm implements PreciseShardingAlgorithm<Long
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Long> shardingValue) {
 
-        Long val = shardingValue.getValue();
-        long t = val >> 22;
-        long s = val & 0xfff;
-        long id = t+s;
-        String suffix = String.valueOf(id %8);
+        Long id = shardingValue.getValue();
+        String suffix = String.valueOf(id & 7);
         for (String tableName : availableTargetNames) {
             if (tableName.endsWith(suffix)) {
                 return tableName;

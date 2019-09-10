@@ -1,152 +1,164 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.mars.user.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="org.mars.user.domain.User" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="uid" property="uid" jdbcType="BIGINT" />
-    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
-    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="age" property="age" jdbcType="INTEGER" />
-    <result column="gender" property="gender" jdbcType="TINYINT" />
-    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
-    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mars.user.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="org.mars.user.domain.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, uid,login_name, nick_name, name, age, gender, pwd, avatar, phone, email
+  <sql id="Base_Column_List">
+    id, uid, login_name, nick_name, name, age, gender, pwd, salt, avatar, phone, email
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="org.mars.user.domain.User" >
-    insert into t_user (id, uid,login_name, nick_name,
-      name, age, gender, 
-      pwd, avatar, phone, 
-      email)
-    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR},  #{nickName,jdbcType=VARCHAR},
-      #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{gender,jdbcType=TINYINT}, 
-      #{pwd,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="org.mars.user.domain.User">
+    insert into t_user (id, uid, login_name, 
+      nick_name, name, age, 
+      gender, pwd, salt, 
+      avatar, phone, email
+      )
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{gender,jdbcType=TINYINT}, #{pwd,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="org.mars.user.domain.User" >
+  <insert id="insertSelective" parameterType="org.mars.user.domain.User">
     insert into t_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="uid != null" >
+      <if test="uid != null">
         uid,
       </if>
-      <if test="loginName != null" >
+      <if test="loginName != null">
         login_name,
       </if>
-      <if test="nickName != null" >
+      <if test="nickName != null">
         nick_name,
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         name,
       </if>
-      <if test="age != null" >
+      <if test="age != null">
         age,
       </if>
-      <if test="gender != null" >
+      <if test="gender != null">
         gender,
       </if>
-      <if test="pwd != null" >
+      <if test="pwd != null">
         pwd,
       </if>
-      <if test="avatar != null" >
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="avatar != null">
         avatar,
       </if>
-      <if test="phone != null" >
+      <if test="phone != null">
         phone,
       </if>
-      <if test="email != null" >
+      <if test="email != null">
         email,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="uid != null" >
+      <if test="uid != null">
         #{uid,jdbcType=BIGINT},
       </if>
-      <if test="loginName != null" >
+      <if test="loginName != null">
         #{loginName,jdbcType=VARCHAR},
       </if>
-      <if test="nickName != null" >
+      <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="age != null" >
+      <if test="age != null">
         #{age,jdbcType=INTEGER},
       </if>
-      <if test="gender != null" >
+      <if test="gender != null">
         #{gender,jdbcType=TINYINT},
       </if>
-      <if test="pwd != null" >
+      <if test="pwd != null">
         #{pwd,jdbcType=VARCHAR},
       </if>
-      <if test="avatar != null" >
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
+      <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
+      <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.mars.user.domain.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="org.mars.user.domain.User">
     update t_user
-    <set >
-      <if test="uid != null" >
+    <set>
+      <if test="uid != null">
         uid = #{uid,jdbcType=BIGINT},
       </if>
-      <if test="loginName != null" >
+      <if test="loginName != null">
         login_name = #{loginName,jdbcType=VARCHAR},
       </if>
-      <if test="nickName != null" >
+      <if test="nickName != null">
         nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="age != null" >
+      <if test="age != null">
         age = #{age,jdbcType=INTEGER},
       </if>
-      <if test="gender != null" >
+      <if test="gender != null">
         gender = #{gender,jdbcType=TINYINT},
       </if>
-      <if test="pwd != null" >
+      <if test="pwd != null">
         pwd = #{pwd,jdbcType=VARCHAR},
       </if>
-      <if test="avatar != null" >
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
         avatar = #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
+      <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
+      <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.mars.user.domain.User" >
+  <update id="updateByPrimaryKey" parameterType="org.mars.user.domain.User">
     update t_user
     set uid = #{uid,jdbcType=BIGINT},
       login_name = #{loginName,jdbcType=VARCHAR},
@@ -155,17 +167,182 @@
       age = #{age,jdbcType=INTEGER},
       gender = #{gender,jdbcType=TINYINT},
       pwd = #{pwd,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-
-
-  <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
+  <resultMap id="BaseResultMap" type="org.mars.user.domain.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, login_name, nick_name, name, age, gender, pwd, salt, avatar, phone, email
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
     <include refid="Base_Column_List" />
     from t_user
-    where uid = #{uid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.mars.user.domain.User">
+    insert into t_user (id, uid, login_name,
+      nick_name, name, age, 
+      gender, pwd, salt, 
+      avatar, phone, email
+      )
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{gender,jdbcType=TINYINT}, #{pwd,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.mars.user.domain.User">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="loginName != null">
+        login_name,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.mars.user.domain.User">
+    update t_user
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.mars.user.domain.User">
+    update t_user
+    set uid = #{uid,jdbcType=BIGINT},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      gender = #{gender,jdbcType=TINYINT},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>
