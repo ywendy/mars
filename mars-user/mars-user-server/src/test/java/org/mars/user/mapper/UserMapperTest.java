@@ -108,7 +108,7 @@ public class UserMapperTest {
                         String login_name = pingyin + "_" + UUID.randomUUID().toString().replace("-","");
                         record.setLoginName(login_name);
                         int hash = login_name.hashCode();
-                        System.err.println("---------------"+hash%2+"---"+hash%16+"-------------------------");
+                        System.err.println("---------------"+hash%2+"---"+hash%8+"-------------------------");
                         record.setUid(uidGenerator.nextId(hash));
                         userMapper.insertSelective(record);
                         //System.out.println("--------------" + j + "-------------------------");
