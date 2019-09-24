@@ -4,11 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.ComplexShardingStrategyConfiguration;
-import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.StandardShardingStrategyConfiguration;
 import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
 import org.mars.user.algorithm.UserDatabaseAlgorithm;
-import org.mars.user.algorithm.UserShardingTableAlgorithm;
+import org.mars.user.algorithm.UserTableAlgorithm;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -58,7 +57,7 @@ public class DatasourceConfig {
         shardingRuleConfig.getTableRuleConfigs().add(getUserTableRulesConfiguration());
         //shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("uid", "user_${uid % 2}"));
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new ComplexShardingStrategyConfiguration("uid,login_name",new UserDatabaseAlgorithm()));
-        shardingRuleConfig.setDefaultTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("uid", new UserShardingTableAlgorithm()));
+        shardingRuleConfig.setDefaultTableShardingStrategyConfig(new ComplexShardingStrategyConfiguration("uid,login_name", new UserTableAlgorithm()));
         return ShardingDataSourceFactory.createDataSource(createDataSourceMap(),
                 shardingRuleConfig, new Properties());
 

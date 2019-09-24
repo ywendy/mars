@@ -1,6 +1,7 @@
 package org.mars.user.config;
 
 import org.mars.user.util.UidGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,11 +11,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BeanConfig {
+/*
+
+    @Value("mars.user.worker-id")
+    private String workerId;
+*/
 
 
     @Bean
     public UidGenerator idGenerator(){
-        return new UidGenerator(1);
+        return new UidGenerator(Integer.valueOf("1"));
     }
 
 }

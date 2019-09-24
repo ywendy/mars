@@ -11,7 +11,16 @@
 
 ```sql
 
+DELETE FROM t_user_0;
+DELETE FROM t_user_2;
+DELETE FROM t_user_4;
+DELETE FROM t_user_6;
 
+
+DELETE FROM t_user_1;
+DELETE FROM t_user_3;
+DELETE FROM t_user_5;
+DELETE FROM t_user_7;
 
 
 DROP TABLE IF EXISTS t_user_0;
@@ -49,12 +58,5 @@ CREATE TABLE `t_user_0` (
 
 
 
-CREATE TABLE t_user_1 SELECT * FROM t_user_0;
-CREATE TABLE t_user_2 SELECT * FROM t_user_0;
-CREATE TABLE t_user_3 SELECT * FROM t_user_0;
-CREATE TABLE t_user_4 SELECT * FROM t_user_0;
-CREATE TABLE t_user_5 SELECT * FROM t_user_0;
-CREATE TABLE t_user_6 SELECT * FROM t_user_0;
-CREATE TABLE t_user_7 SELECT * FROM t_user_0;
 
 ```

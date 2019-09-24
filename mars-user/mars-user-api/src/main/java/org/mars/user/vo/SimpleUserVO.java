@@ -17,8 +17,9 @@ public class SimpleUserVO implements Serializable {
     public SimpleUserVO() {
     }
 
-    public SimpleUserVO(Long id, String nickName, Integer age, String gender, String avatar) {
-        this.id = id;
+
+    public SimpleUserVO(Long uid, String nickName, Integer age, String gender, String avatar) {
+        this.uid = uid;
         this.nickName = nickName;
         this.age = age;
         this.gender = gender;
@@ -28,7 +29,7 @@ public class SimpleUserVO implements Serializable {
     /**
      * 用户ID
      **/
-    private Long id;
+    private Long uid;
     /**
      * 用户昵称
      */

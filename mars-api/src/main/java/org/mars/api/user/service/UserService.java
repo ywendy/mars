@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface UserService {
 
 
-    @GetMapping("/user/simple/{id}")
-    SimpleUserVO simpleUserDetail(@PathVariable("id") Long id);
+
+    @GetMapping("/user/simple/{uid}")
+    SimpleUserVO simpleUserDetail(@PathVariable("uid") Long uid);
 
 
 }

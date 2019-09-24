@@ -7,6 +7,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mars.common.security.MD5Util;
 import org.mars.user.domain.User;
 import org.mars.user.util.NameBuilder;
 import org.mars.user.util.RandomName;
@@ -23,7 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author yaojian
+ * @author tony
  * @date 2019/8/30
  */
 @RunWith(SpringRunner.class)
@@ -41,8 +42,15 @@ public class UserMapperTest {
 
     @Test
     public void testSelectByKey() {
-       /* User user = userMapper.selectByUid(375729249329348608L);
-        System.out.println(user);*/
+        User user = userMapper.selectByUid(63203202757137698L);
+        System.out.println(user);
+    }
+
+
+    @Test
+    public void testSelectByLoginName(){
+        User user = userMapper.selectByLoginName("suxiaban_8");
+        System.out.println(user);
     }
 
 
@@ -86,9 +94,9 @@ public class UserMapperTest {
         ExecutorService executor = Executors.newFixedThreadPool(50);
 
 
-        for (int n = 0; n < 1; n++) {
+        for (int n = 0; n < 100; n++) {
             executor.submit(() -> {
-                for (int j = 0; j < 100; j++) {
+                for (int j = 0; j < 10000; j++) {
                     //System.out.println("begin================");
                     try {
                         int i = ThreadLocalRandom.current().nextInt(2);
@@ -97,15 +105,21 @@ public class UserMapperTest {
                         String name = NameBuilder.build();
                         String pingyin = pingyin(name).toLowerCase();
                         record.setName(name);
-                        record.setNickName(RandomName.getRandomJianHan(ThreadLocalRandom.current().nextInt(10)));
+                        int i1 = ThreadLocalRandom.current().nextInt(10);
+                        if (i1<1){
+                            i1=5;
+                        }
+                        record.setNickName(RandomName.getRandomJianHan(i1));
                         record.setPhone(getTel());
                         record.setEmail(getAlpha(name).toLowerCase() + email_suffix[(int) (Math.random() * email_suffix.length)]);
                         record.setGender(i == 1 ? (byte) 1 : (byte) 2);
                         int age = ThreadLocalRandom.current().nextInt(50);
                         record.setAge(age);
-                        record.setPwd(pingyin + age);
+                        String salt = UUID.randomUUID().toString().replaceAll("-","");
+                        record.setPwd(MD5Util.md5(pingyin,salt));
+                        record.setSalt(salt);
                         record.setAvatar("/profile/avatar/" + pingyin + ".png");
-                        String login_name = pingyin + "_" + UUID.randomUUID().toString().replace("-","");
+                        String login_name = pingyin + "_" + ThreadLocalRandom.current().nextInt(1000);
                         record.setLoginName(login_name);
                         int hash = login_name.hashCode();
                         System.err.println("---------------"+hash%2+"---"+hash%8+"-------------------------");
