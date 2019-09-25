@@ -6,29 +6,11 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * @author yaojian
+ * @author tony
  * @date 2019/9/1
  */
 public class RandomName {
-    public static void main(String[] args) {
-      /*  *//**随机产生100个昵称*//*
-        HashSet<String> set = new HashSet<String>();
-        for (int i = 0; i < 100; i++) {
-            String chineseName = randomName(true,3);
-            if (!set.contains(chineseName)) {
-                set.add(chineseName);
-            }
-        }
-        Iterator<String> iterator = set.iterator();
-        while (iterator.hasNext()) {
-            System.err.print(iterator.next() + "\n");
-        }*/
 
-        System.out.println(getRandomJianHan(2));
-
-
-
-    }
     /**方法1*/
     public static String getRandomJianHan(int len) {
         String randomName = "";

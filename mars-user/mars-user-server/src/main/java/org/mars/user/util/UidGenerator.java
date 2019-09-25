@@ -14,7 +14,7 @@ package org.mars.user.util;
  *  11： login_name 的hashcode
  *
  *
- * @author yaojian
+ * @author tony
  * @date 2019/9/10
  */
 public class UidGenerator {

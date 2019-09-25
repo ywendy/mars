@@ -3,7 +3,7 @@ package org.mars.user.util;
 import java.util.Random;
 
 /**
- * @author yaojian
+ * @author tony
  * @date 2019/9/1
  */
 public class NameBuilder {
@@ -82,32 +82,7 @@ public class NameBuilder {
         return build(length);
     }
 
-    public static void main(String[] args) {
-        System.out.println("\r\n指定姓氏造100个3个字的名字");
-        for (int i = 0; i < 100; i++) {
-            System.out.print(build("廖", 3) + "，");
-            if ((i + 1) % 10 == 0) {
-                System.out.println();
-            }
-        }
 
-        System.out.println("\r\n不指定姓氏造100个3个字的名字");
-        for (int i = 0; i < 100; i++) {
-            System.out.print(build(3) + "，");
-            if ((i + 1) % 10 == 0) {
-                System.out.println();
-            }
-        }
-
-        System.out.println("\r\n随机造100个名2~3个字的字");
-        for (int i = 0; i < 100; i++) {
-            System.out.print(build() + "\t");
-            if ((i + 1) % 10 == 0) {
-                System.out.println();
-            }
-        }
-
-    }
 
 
 }

@@ -1,12 +1,11 @@
 package org.mars.user.config;
 
 import org.mars.user.util.UidGenerator;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author yaojian
+ * @author tony
  * @date 2019/9/10
  */
 @Configuration

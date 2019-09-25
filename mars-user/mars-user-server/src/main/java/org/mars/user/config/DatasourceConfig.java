@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * @author yaojian
+ * @author tony
  * @date 2019/9/1
  */
 @Configuration
@@ -74,15 +74,8 @@ public class DatasourceConfig {
 
     TableRuleConfiguration getUserTableRulesConfiguration() {
         TableRuleConfiguration result = new TableRuleConfiguration("t_user", "user_${0..1}.t_user_${0..7}");
-        //result.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
         return result;
     }
-
-
-  /*  private KeyGeneratorConfiguration getKeyGeneratorConfiguration() {
-        return new KeyGeneratorConfiguration("SNOWFLAKE", "uid", new Properties());
-    }
-*/
 
 
 
